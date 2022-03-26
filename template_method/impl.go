@@ -4,6 +4,8 @@ import (
 	"fmt"
 )
 
+// https://github.com/j5ik2o/design-patterns-in-rust/blob/main/src/template_method.rs のGo版
+
 type Operation interface {
 	Open()
 	Print()
@@ -24,23 +26,7 @@ type StringDisplay struct {
 	op   Operation
 }
 
-type DefaultOperation struct {
-	msg string
-}
-
-func (o *DefaultOperation) Open() {
-	fmt.Print("<<")
-}
-
-func (o *DefaultOperation) Print() {
-	fmt.Print(o.msg)
-}
-
-func (o *DefaultOperation) Close() {
-	fmt.Println(">>")
-}
-
-func newCharDisplay(s string) *CharDisplay {
+func NewCharDisplay(s string) *CharDisplay {
 	return &CharDisplay{
 		data: s,
 		op: &DefaultOperation{
@@ -49,7 +35,7 @@ func newCharDisplay(s string) *CharDisplay {
 	}
 }
 
-func newStringDisplay(s string) *StringDisplay {
+func NewStringDisplay(s string) *StringDisplay {
 	return &StringDisplay{
 		data: s,
 		op: &DefaultOperation{
@@ -72,4 +58,20 @@ func (o *CharDisplay) Display() {
 
 func (o *StringDisplay) Display() {
 	template(o.op)
+}
+
+type DefaultOperation struct {
+	msg string
+}
+
+func (o *DefaultOperation) Open() {
+	fmt.Print("<<")
+}
+
+func (o *DefaultOperation) Print() {
+	fmt.Print(o.msg)
+}
+
+func (o *DefaultOperation) Close() {
+	fmt.Println(">>")
 }
