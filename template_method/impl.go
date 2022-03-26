@@ -6,7 +6,7 @@ import (
 
 // https://github.com/j5ik2o/design-patterns-in-rust/blob/main/src/template_method.rs のGo版
 
-type Operation interface {
+type operation interface {
 	Open()
 	Print()
 	Close()
@@ -18,12 +18,12 @@ type Display interface {
 
 type CharDisplay struct {
 	data string
-	op   Operation
+	op   operation
 }
 
 type StringDisplay struct {
 	data string
-	op   Operation
+	op   operation
 }
 
 func NewCharDisplay(s string) *CharDisplay {
@@ -44,7 +44,7 @@ func NewStringDisplay(s string) *StringDisplay {
 	}
 }
 
-func template(o Operation) {
+func template(o operation) {
 	o.Open()
 	for i := 0; i < 5; i++ {
 		o.Print()
