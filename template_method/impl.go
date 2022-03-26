@@ -11,34 +11,30 @@ type Display interface {
 }
 
 type CharDisplay struct {
-	*AbstractDisplay
-	data string
+	*DisplayTemplate
 }
 
 type StringDisplay struct {
-	*AbstractDisplay
-	data string
+	*DisplayTemplate
 }
 
-func NewCharDisplay(c byte) *CharDisplay {
+func NewCharDisplay(c rune) *CharDisplay {
 	return &CharDisplay{
-		AbstractDisplay: &AbstractDisplay{
+		DisplayTemplate: &DisplayTemplate{
 			msg: string(c),
 		},
-		data: string(c),
 	}
 }
 
 func NewStringDisplay(s string) *StringDisplay {
 	return &StringDisplay{
-		AbstractDisplay: &AbstractDisplay{
+		DisplayTemplate: &DisplayTemplate{
 			msg: s,
 		},
-		data: s,
 	}
 }
 
-func (o *AbstractDisplay) Display() {
+func (o *DisplayTemplate) Display() {
 	o.Open()
 	for i := 0; i < 5; i++ {
 		o.Print()
@@ -46,18 +42,18 @@ func (o *AbstractDisplay) Display() {
 	o.Close()
 }
 
-type AbstractDisplay struct {
+type DisplayTemplate struct {
 	msg string
 }
 
-func (o *AbstractDisplay) Open() {
+func (*DisplayTemplate) Open() {
 	fmt.Print("<<")
 }
 
-func (o *AbstractDisplay) Print() {
+func (o *DisplayTemplate) Print() {
 	fmt.Print(o.msg)
 }
 
-func (o *AbstractDisplay) Close() {
+func (*DisplayTemplate) Close() {
 	fmt.Println(">>")
 }
