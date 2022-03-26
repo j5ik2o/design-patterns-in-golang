@@ -7,7 +7,7 @@ func testDisplay(d Display) {
 }
 
 func TestCharDisplay_Display(t *testing.T) {
-	cd := NewCharDisplay("abc")
+	cd := NewCharDisplay('H')
 	testDisplay(cd)
 	sd := NewStringDisplay("def")
 	testDisplay(sd)

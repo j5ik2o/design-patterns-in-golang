@@ -6,45 +6,39 @@ import (
 
 // https://github.com/j5ik2o/design-patterns-in-rust/blob/main/src/template_method.rs のGo版
 
-type operation interface {
-	Open()
-	Print()
-	Close()
-}
-
 type Display interface {
 	Display()
 }
 
 type CharDisplay struct {
+	*AbstractDisplay
 	data string
-	op   operation
 }
 
 type StringDisplay struct {
+	*AbstractDisplay
 	data string
-	op   operation
 }
 
-func NewCharDisplay(s string) *CharDisplay {
+func NewCharDisplay(c byte) *CharDisplay {
 	return &CharDisplay{
-		data: s,
-		op: &DefaultOperation{
-			msg: s,
+		AbstractDisplay: &AbstractDisplay{
+			msg: string(c),
 		},
+		data: string(c),
 	}
 }
 
 func NewStringDisplay(s string) *StringDisplay {
 	return &StringDisplay{
-		data: s,
-		op: &DefaultOperation{
+		AbstractDisplay: &AbstractDisplay{
 			msg: s,
 		},
+		data: s,
 	}
 }
 
-func template(o operation) {
+func (o *AbstractDisplay) Display() {
 	o.Open()
 	for i := 0; i < 5; i++ {
 		o.Print()
@@ -52,26 +46,18 @@ func template(o operation) {
 	o.Close()
 }
 
-func (o *CharDisplay) Display() {
-	template(o.op)
-}
-
-func (o *StringDisplay) Display() {
-	template(o.op)
-}
-
-type DefaultOperation struct {
+type AbstractDisplay struct {
 	msg string
 }
 
-func (o *DefaultOperation) Open() {
+func (o *AbstractDisplay) Open() {
 	fmt.Print("<<")
 }
 
-func (o *DefaultOperation) Print() {
+func (o *AbstractDisplay) Print() {
 	fmt.Print(o.msg)
 }
 
-func (o *DefaultOperation) Close() {
+func (o *AbstractDisplay) Close() {
 	fmt.Println(">>")
 }
