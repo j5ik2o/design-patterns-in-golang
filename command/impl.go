@@ -24,16 +24,20 @@ func (mc *MacroCommand) Execute() {
 	}
 }
 
-func (mc *MacroCommand) Append(cmd Command) {
-	mc.commands = append(mc.commands, cmd)
+func (mc *MacroCommand) Append(cmd Command) *MacroCommand {
+	return &MacroCommand{
+		commands: append(mc.commands, cmd),
+	}
 }
 
-func (mc *MacroCommand) Undo() {
-	mc.commands = mc.commands[:len(mc.commands)-1]
+func (mc *MacroCommand) Undo() *MacroCommand {
+	return &MacroCommand{
+		commands: mc.commands[:len(mc.commands)-1],
+	}
 }
 
-func (mc *MacroCommand) Clear() {
-	mc.commands = []Command{}
+func (mc *MacroCommand) Clear() *MacroCommand {
+	return NewMacroCommand()
 }
 
 // --- EchoCommand
