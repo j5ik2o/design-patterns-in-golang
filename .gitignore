@@ -19,3 +19,4 @@ desgin-patterns-in-golang
 
 .idea/
 .vscode/
+coverage.txt
