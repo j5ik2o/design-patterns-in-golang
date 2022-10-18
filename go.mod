@@ -1,3 +1,3 @@
 module desgin-patterns-in-golang
 
-go 1.91
+go 1.19
