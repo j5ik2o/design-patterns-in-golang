@@ -63,7 +63,7 @@ func (h *Hand) IsWeakerThan(other Hand) bool {
 	return h.Fight(other) == -1
 }
 
-func (h *Hand) toString() string {
+func (h *Hand) ToString() string {
 	return h.Name()
 }
 

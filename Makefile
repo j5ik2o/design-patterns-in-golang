@@ -1,15 +1,12 @@
 .PHONY: setup
 setup: ## Install all the build and lint dependencies
-	go get -u github.com/alecthomas/gometalinter
+	go install honnef.co/go/tools/cmd/staticcheck@latest
 	go get -u golang.org/x/tools/cmd/cover
-	go get -u github.com/golang/dep/cmd/dep
-	gometalinter --install --update
 	@$(MAKE) dep
 
-.PHONY: dep
-dep: ## Run dep ensure and prune
-	dep ensure
-	dep prune
+.PHOstaticcheck ./...NY: dep
+dep:
+	go mod tidy
 
 .PHONY: test
 test: ## Run all the tests
@@ -25,19 +22,8 @@ fmt: ## Run goimports on all go files
 
 .PHONY: lint
 lint: ## Run all the linters
-	gometalinter --vendor --disable-all \
-		--enable=deadcode \
-		--enable=ineffassign \
-		--enable=gosimple \
-		--enable=staticcheck \
-		--enable=gofmt \
-		--enable=goimports \
-		--enable=misspell \
-		--enable=errcheck \
-		--enable=vet \
-		--enable=vetshadow \
-		--deadline=10m \
-		./...
+	go vet ./...
+	staticcheck ./...
 
 .PHONY: ci
 ci: lint test ## Run all the tests and code checks
