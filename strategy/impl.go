@@ -1,6 +1,9 @@
 package strategy
 
-import "math/rand"
+import (
+	"fmt"
+	"math/rand"
+)
 
 type Hand int
 
@@ -33,7 +36,7 @@ func GetHand(value int) Hand {
 	case 2:
 		result = PAA
 	default:
-		panic("not found")
+		panic(fmt.Sprintf("not found: value = %d", value))
 	}
 	return result
 }
@@ -43,9 +46,9 @@ func (h *Hand) HandValue() int {
 }
 
 func (h *Hand) Fight(other Hand) int {
-	if *h == other {
+	if h.HandValue() == other.HandValue() {
 		return 0
-	} else if (h.HandValue()+1)%3 == h.HandValue() {
+	} else if ((h.HandValue() + 1) % 3) == other.HandValue() {
 		return 1
 	} else {
 		return -1
@@ -65,7 +68,8 @@ func (h *Hand) toString() string {
 }
 
 type Strategy interface {
-	NextHand() Hand
+	NextHand() *Hand
+	Study(win bool)
 }
 
 type WinningStrategy struct {
@@ -82,8 +86,8 @@ func NewWinningStrategy() *WinningStrategy {
 
 func (ws *WinningStrategy) NextHand() *Hand {
 	if !ws.won {
-		next := GetHand(rand.Int())
-		ws.prevHand = &next
+		result := GetHand(rand.Intn(2))
+		ws.prevHand = &result
 	}
 	return ws.prevHand
 }
@@ -96,4 +100,87 @@ type ProbeStrategy struct {
 	prevHandValue    int
 	currentHandValue int
 	history          [][]int
+}
+
+func NewProbeStrategy() *ProbeStrategy {
+	return &ProbeStrategy{
+		prevHandValue:    0,
+		currentHandValue: 0,
+		history:          [][]int{{1, 1, 1}, {1, 1, 1}, {1, 1, 1}},
+	}
+}
+
+func (ps *ProbeStrategy) getSum(handValue int) int {
+	var result = 0
+	for i := 0; i <= 2; i++ {
+		result += ps.history[handValue][i]
+	}
+	return result
+}
+
+func (ps *ProbeStrategy) NextHand() *Hand {
+	bet := rand.Intn(ps.getSum(ps.currentHandValue))
+	var handValue int
+	if bet < ps.history[ps.currentHandValue][0] {
+		handValue = 0
+	} else if bet < ps.history[ps.currentHandValue][0]*ps.history[ps.currentHandValue][1] {
+		handValue = 1
+	} else {
+		handValue = 2
+	}
+	ps.prevHandValue = ps.currentHandValue
+	ps.currentHandValue = handValue
+	result := GetHand(handValue)
+	return &result
+}
+
+func (ps *ProbeStrategy) Study(win bool) {
+	if win {
+		ps.history[ps.prevHandValue][ps.currentHandValue] += 1
+	} else {
+		ps.history[ps.prevHandValue][((ps.currentHandValue + 1) % 3)] += 1
+		ps.history[ps.prevHandValue][((ps.currentHandValue + 2) % 3)] += 1
+	}
+}
+
+type Player struct {
+	name      string
+	strategy  Strategy
+	winCount  int
+	loseCount int
+	gameCount int
+}
+
+func NewPlayer(name string, strategy Strategy) *Player {
+	return &Player{
+		name:      name,
+		strategy:  strategy,
+		winCount:  0,
+		loseCount: 0,
+		gameCount: 0,
+	}
+}
+
+func (p *Player) ToString() string {
+	return fmt.Sprintf("[%s: %d games, %d win, %d lose]", p.name, p.gameCount, p.winCount, p.loseCount)
+}
+
+func (p *Player) NextHand() *Hand {
+	return p.strategy.NextHand()
+}
+
+func (p *Player) Win() {
+	p.strategy.Study(true)
+	p.winCount += 1
+	p.gameCount += 1
+}
+
+func (p *Player) Lose() {
+	p.strategy.Study(false)
+	p.loseCount += 1
+	p.gameCount += 1
+}
+
+func (p *Player) Even() {
+	p.gameCount += 1
 }

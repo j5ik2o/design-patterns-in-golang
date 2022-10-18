@@ -15,5 +15,7 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
+desgin-patterns-in-golang
+
 .idea/
 .vscode/
