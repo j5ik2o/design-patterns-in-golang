@@ -4,7 +4,7 @@ setup: ## Install all the build and lint dependencies
 	go get -u golang.org/x/tools/cmd/cover
 	@$(MAKE) dep
 
-.PHOstaticcheck ./...NY: dep
+.PHONY: dep
 dep:
 	go mod tidy
 
