@@ -4,16 +4,16 @@ import "fmt"
 
 type Context interface {
 	SetClock(hour uint)
-	ChangeState(state State[Context])
+	ChangeState(state State)
 	CallSecurityCenter(msg string)
 	RecordLog(msg string)
 }
 
-type State[C Context] interface {
-	DoClock(context C, hour uint)
-	DoUse(context C)
-	DoAlarm(context C)
-	DoPhone(context C)
+type State interface {
+	DoClock(context Context, hour uint)
+	DoUse(context Context)
+	DoAlarm(context Context)
+	DoPhone(context Context)
 	ToString() string
 }
 
@@ -68,10 +68,10 @@ func (n *Night) DoPhone(context Context) {
 }
 
 type StateContext struct {
-	state State[Context]
+	state State
 }
 
-func NewStateContext(state State[Context]) *StateContext {
+func NewStateContext(state State) *StateContext {
 	return &StateContext{state}
 }
 
@@ -100,14 +100,14 @@ func (sc *StateContext) SetClock(hour uint) {
 	sc.state.DoClock(sc, hour)
 }
 
-func (sc *StateContext) ChangeState(state State[Context]) {
+func (sc *StateContext) ChangeState(state State) {
 	sc.state = state
 }
 
 func (sc *StateContext) CallSecurityCenter(msg string) {
-	fmt.Printf("%s:%s", sc.state.ToString(), msg)
+	fmt.Printf("%s:%s\n", sc.state.ToString(), msg)
 }
 
 func (sc *StateContext) RecordLog(msg string) {
-	fmt.Printf("%s:%s", sc.state.ToString(), msg)
+	fmt.Printf("%s:%s\n", sc.state.ToString(), msg)
 }
