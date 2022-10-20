@@ -33,6 +33,7 @@ func readFontData(charName string) string {
 	if err := scanner.Err(); err != nil {
 		panic(err)
 	}
+
 	return result
 }
 
