@@ -17,8 +17,8 @@ func (bc *BigChar) ToString() string {
 }
 
 func readFontData(charName string) string {
-	fmt.Printf("read font data: %s", charName)
-	fileName := fmt.Sprintf("flyweight/big%s.txt", charName)
+	// fmt.Printf("read font data: %s\n", charName)
+	fileName := fmt.Sprintf("big%s.txt", charName)
 	file, err := os.Open(fileName)
 	if err != nil {
 		panic(err)
@@ -28,7 +28,7 @@ func readFontData(charName string) string {
 	var result string
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		result += scanner.Text()
+		result += scanner.Text() + "\n"
 	}
 	if err := scanner.Err(); err != nil {
 		panic(err)
