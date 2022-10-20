@@ -1,6 +1,9 @@
 package chain_of_responsibility
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/samber/mo"
+)
 
 type Trouble struct {
 	number int
@@ -23,7 +26,7 @@ func (t *Trouble) String() string {
 type SupportBase interface {
 	Done(trouble *Trouble)
 	Fail(trouble *Trouble)
-	Next() Support
+	Next() mo.Option[Support]
 }
 
 type Support interface {
@@ -36,10 +39,10 @@ type Support interface {
 
 type NoSupport struct {
 	name string
-	next Support
+	next mo.Option[Support]
 }
 
-func NewNoSupport(name string, next Support) *NoSupport {
+func NewNoSupport(name string, next mo.Option[Support]) *NoSupport {
 	return &NoSupport{
 		name,
 		next,
@@ -58,7 +61,7 @@ func (n *NoSupport) Fail(trouble *Trouble) {
 	fmt.Printf("%s cannot be resolved.\n", trouble)
 }
 
-func (n *NoSupport) Next() Support {
+func (n *NoSupport) Next() mo.Option[Support] {
 	return n.next
 }
 
@@ -74,11 +77,11 @@ func (n *NoSupport) Support(trouble *Trouble) {
 
 type LimitSupport struct {
 	name  string
-	next  Support
+	next  mo.Option[Support]
 	limit int
 }
 
-func NewLimitSupport(name string, limit int, next Support) *LimitSupport {
+func NewLimitSupport(name string, limit int, next mo.Option[Support]) *LimitSupport {
 	return &LimitSupport{
 		name,
 		next,
@@ -98,7 +101,7 @@ func (l *LimitSupport) Fail(trouble *Trouble) {
 	fmt.Printf("%s cannot be resolved.\n", trouble)
 }
 
-func (l *LimitSupport) Next() Support {
+func (l *LimitSupport) Next() mo.Option[Support] {
 	return l.next
 }
 
@@ -117,10 +120,10 @@ func (l *LimitSupport) Support(trouble *Trouble) {
 
 type OddSupport struct {
 	name string
-	next Support
+	next mo.Option[Support]
 }
 
-func NewOddSupport(name string, next Support) *OddSupport {
+func NewOddSupport(name string, next mo.Option[Support]) *OddSupport {
 	return &OddSupport{
 		name,
 		next,
@@ -139,7 +142,7 @@ func (o *OddSupport) Fail(trouble *Trouble) {
 	fmt.Printf("%s cannot be resolved.\n", trouble)
 }
 
-func (o *OddSupport) Next() Support {
+func (o *OddSupport) Next() mo.Option[Support] {
 	return o.next
 }
 
@@ -158,11 +161,11 @@ func (o *OddSupport) Support(trouble *Trouble) {
 
 type SpecialSupport struct {
 	name   string
-	next   Support
+	next   mo.Option[Support]
 	number int
 }
 
-func NewSpecialSupport(name string, number int, next Support) *SpecialSupport {
+func NewSpecialSupport(name string, number int, next mo.Option[Support]) *SpecialSupport {
 	return &SpecialSupport{
 		name,
 		next,
@@ -182,7 +185,7 @@ func (s *SpecialSupport) Fail(trouble *Trouble) {
 	fmt.Printf("%s cannot be resolved.\n", trouble)
 }
 
-func (s *SpecialSupport) Next() Support {
+func (s *SpecialSupport) Next() mo.Option[Support] {
 	return s.next
 }
 
@@ -200,8 +203,8 @@ func (s *SpecialSupport) Support(trouble *Trouble) {
 func support(s Support, trouble *Trouble) {
 	if s.Resolve(trouble) {
 		s.Done(trouble)
-	} else if s.Next() != nil {
-		s.Next().Support(trouble)
+	} else if s.Next() != mo.None[Support]() {
+		s.Next().MustGet().Support(trouble)
 	} else {
 		s.Fail(trouble)
 	}

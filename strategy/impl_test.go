@@ -13,8 +13,8 @@ func TestStrategy(t *testing.T) {
 	player2 := NewPlayer("Hana", probeStrategy)
 
 	for i := 0; i < 10000; i++ {
-		nextHand1 := player1.NextHand()
-		nextHand2 := player2.NextHand()
+		nextHand1 := player1.NextHand().MustGet()
+		nextHand2 := player2.NextHand().MustGet()
 		if nextHand1.IsStrongerThan(*nextHand2) {
 			fmt.Printf("Winner:%s\n", player1.ToString())
 			player1.Win()

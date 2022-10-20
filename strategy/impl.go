@@ -2,6 +2,7 @@ package strategy
 
 import (
 	"fmt"
+	"github.com/samber/mo"
 	"math/rand"
 )
 
@@ -68,26 +69,26 @@ func (h *Hand) ToString() string {
 }
 
 type Strategy interface {
-	NextHand() *Hand
+	NextHand() mo.Option[*Hand]
 	Study(win bool)
 }
 
 type WinningStrategy struct {
 	won      bool
-	prevHand *Hand
+	prevHand mo.Option[*Hand]
 }
 
 func NewWinningStrategy() *WinningStrategy {
 	return &WinningStrategy{
 		won:      false,
-		prevHand: nil,
+		prevHand: mo.None[*Hand](),
 	}
 }
 
-func (ws *WinningStrategy) NextHand() *Hand {
+func (ws *WinningStrategy) NextHand() mo.Option[*Hand] {
 	if !ws.won {
 		result := GetHand(rand.Intn(2))
-		ws.prevHand = &result
+		ws.prevHand = mo.Some(&result)
 	}
 	return ws.prevHand
 }
@@ -118,7 +119,7 @@ func (ps *ProbeStrategy) getSum(handValue int) int {
 	return result
 }
 
-func (ps *ProbeStrategy) NextHand() *Hand {
+func (ps *ProbeStrategy) NextHand() mo.Option[*Hand] {
 	bet := rand.Intn(ps.getSum(ps.currentHandValue))
 	var handValue int
 	if bet < ps.history[ps.currentHandValue][0] {
@@ -131,7 +132,7 @@ func (ps *ProbeStrategy) NextHand() *Hand {
 	ps.prevHandValue = ps.currentHandValue
 	ps.currentHandValue = handValue
 	result := GetHand(handValue)
-	return &result
+	return mo.Some(&result)
 }
 
 func (ps *ProbeStrategy) Study(win bool) {
@@ -165,7 +166,7 @@ func (p *Player) ToString() string {
 	return fmt.Sprintf("[%s: %d games, %d win, %d lose]", p.name, p.gameCount, p.winCount, p.loseCount)
 }
 
-func (p *Player) NextHand() *Hand {
+func (p *Player) NextHand() mo.Option[*Hand] {
 	return p.strategy.NextHand()
 }
 
