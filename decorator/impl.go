@@ -84,10 +84,10 @@ func (f *FullBorder) Show() {
 
 type SideBorder struct {
 	underlying Display
-	borderChar string
+	borderChar rune
 }
 
-func NewSideBorder(underlying Display, borderChar string) *SideBorder {
+func NewSideBorder(underlying Display, borderChar rune) *SideBorder {
 	return &SideBorder{underlying, borderChar}
 }
 
@@ -100,7 +100,7 @@ func (s *SideBorder) GetRows() int {
 }
 
 func (s *SideBorder) GetRowText(row int) string {
-	return s.borderChar + s.underlying.GetRowText(row) + s.borderChar
+	return string(s.borderChar) + s.underlying.GetRowText(row) + string(s.borderChar)
 }
 
 func (s *SideBorder) Show() {
