@@ -3,25 +3,25 @@ package composite
 import "testing"
 
 func TestComposite(t *testing.T) {
-	rootdir := NewDirectory("root")
-	bindir := NewDirectory("bin")
-	tmpdir := NewDirectory("tmp")
-	usrdir := NewDirectory("usr")
+	rootDir := NewDirectory("root")
+	binDir := NewDirectory("bin")
+	tmpDir := NewDirectory("tmp")
+	usrDir := NewDirectory("usr")
 
-	rootdir.Add(bindir)
-	rootdir.Add(tmpdir)
-	rootdir.Add(usrdir)
+	rootDir.Add(binDir)
+	rootDir.Add(tmpDir)
+	rootDir.Add(usrDir)
 
-	bindir.Add(NewFile("vi", 10000))
-	bindir.Add(NewFile("latex", 20000))
+	binDir.Add(NewFile("vi", 10000))
+	binDir.Add(NewFile("latex", 20000))
 
 	yuki := NewDirectory("yuki")
 	hanako := NewDirectory("hanako")
 	tomura := NewDirectory("tomura")
 
-	usrdir.Add(yuki)
-	usrdir.Add(hanako)
-	usrdir.Add(tomura)
+	usrDir.Add(yuki)
+	usrDir.Add(hanako)
+	usrDir.Add(tomura)
 
 	yuki.Add(NewFile("diary.html", 100))
 	yuki.Add(NewFile("Composite.java", 200))
@@ -31,5 +31,5 @@ func TestComposite(t *testing.T) {
 	tomura.Add(NewFile("game.doc", 400))
 	tomura.Add(NewFile("junk.mail", 500))
 
-	rootdir.PrintLine()
+	rootDir.PrintLine()
 }

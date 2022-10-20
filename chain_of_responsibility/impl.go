@@ -23,10 +23,11 @@ func (t *Trouble) String() string {
 type SupportBase interface {
 	Done(trouble *Trouble)
 	Fail(trouble *Trouble)
-	Next(trouble *Trouble) Support
+	Next() Support
 }
 
 type Support interface {
+	SupportBase
 	Resolve(trouble *Trouble) bool
 	Support(trouble *Trouble)
 }
@@ -66,13 +67,7 @@ func (n *NoSupport) Resolve(trouble *Trouble) bool {
 }
 
 func (n *NoSupport) Support(trouble *Trouble) {
-	if n.Resolve(trouble) {
-		n.Done(trouble)
-	} else if n.Next() != nil {
-		n.Next().Support(trouble)
-	} else {
-		n.Fail(trouble)
-	}
+	support(n, trouble)
 }
 
 // ---
@@ -115,13 +110,7 @@ func (l *LimitSupport) Resolve(trouble *Trouble) bool {
 }
 
 func (l *LimitSupport) Support(trouble *Trouble) {
-	if l.Resolve(trouble) {
-		l.Done(trouble)
-	} else if l.Next() != nil {
-		l.Next().Support(trouble)
-	} else {
-		l.Fail(trouble)
-	}
+	support(l, trouble)
 }
 
 // ---
@@ -162,13 +151,7 @@ func (o *OddSupport) Resolve(trouble *Trouble) bool {
 }
 
 func (o *OddSupport) Support(trouble *Trouble) {
-	if o.Resolve(trouble) {
-		o.Done(trouble)
-	} else if o.Next() != nil {
-		o.Next().Support(trouble)
-	} else {
-		o.Fail(trouble)
-	}
+	support(o, trouble)
 }
 
 // ---
@@ -211,6 +194,10 @@ func (s *SpecialSupport) Resolve(trouble *Trouble) bool {
 }
 
 func (s *SpecialSupport) Support(trouble *Trouble) {
+	support(s, trouble)
+}
+
+func support(s Support, trouble *Trouble) {
 	if s.Resolve(trouble) {
 		s.Done(trouble)
 	} else if s.Next() != nil {
