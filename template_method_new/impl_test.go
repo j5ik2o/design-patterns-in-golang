@@ -1,14 +1,12 @@
-package template_method
+package template_method_new
 
 import "testing"
 
-func testDisplay(d Display) {
-	d.Display()
-}
-
 func TestCharDisplay_Display(t *testing.T) {
 	cd := NewCharDisplay('H')
-	testDisplay(cd)
 	sd := NewStringDisplay("Hello, world.")
-	testDisplay(sd)
+
+	NewTemplate(cd).Display()
+	NewTemplate(sd).Display()
+
 }

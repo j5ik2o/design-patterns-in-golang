@@ -1,4 +1,4 @@
-package template_method
+package template_method_old
 
 import "fmt"
 
