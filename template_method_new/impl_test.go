@@ -6,7 +6,7 @@ func TestCharDisplay_Display(t *testing.T) {
 	cd := NewCharDisplay('H')
 	sd := NewStringDisplay("Hello, world.")
 
-	NewTemplate(cd).Display()
-	NewTemplate(sd).Display()
+	cd.Display()
+	sd.Display()
 
 }

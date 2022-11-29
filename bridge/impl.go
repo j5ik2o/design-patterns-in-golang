@@ -3,7 +3,7 @@ package bridge
 import "fmt"
 
 type Display interface {
-	Open()
+	open()
 	Print()
 	Close()
 	Display()
@@ -17,7 +17,7 @@ func NewDisplayDefault(underlying DisplayImpl) *DisplayDefault {
 	return &DisplayDefault{underlying}
 }
 
-func (d *DisplayDefault) Open() {
+func (d *DisplayDefault) open() {
 	d.underlying.RawOpen()
 }
 
@@ -30,7 +30,7 @@ func (d *DisplayDefault) Close() {
 }
 
 func (d *DisplayDefault) Display() {
-	d.Open()
+	d.open()
 	d.Print()
 	d.Close()
 }
@@ -46,15 +46,15 @@ func NewCountDisplay(underlying DisplayImpl) *CountDisplay {
 }
 
 func (c *CountDisplay) MultiDisplay(times int) {
-	c.underlying.Open()
+	c.underlying.open()
 	for i := 0; i < times; i++ {
 		c.underlying.Print()
 	}
 	c.underlying.Close()
 }
 
-func (c *CountDisplay) Open() {
-	c.underlying.Open()
+func (c *CountDisplay) open() {
+	c.underlying.open()
 }
 
 func (c *CountDisplay) Print() {
