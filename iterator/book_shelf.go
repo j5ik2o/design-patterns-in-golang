@@ -1,19 +1,5 @@
 package iterator
 
-type Book struct {
-	name string
-}
-
-func NewBook(name string) *Book {
-	return &Book{
-		name: name,
-	}
-}
-
-func (b *Book) GetName() string {
-	return b.name
-}
-
 type BookShelf struct {
 	values []*Book
 	last   int
@@ -48,26 +34,4 @@ func (b *BookShelf) GetLength() int {
 
 func (b *BookShelf) GetIterator() *BookShelfIterator {
 	return NewBookShelfIterator(b)
-}
-
-type BookShelfIterator struct {
-	bookShelf *BookShelf
-	index     int
-}
-
-func NewBookShelfIterator(bookShelf *BookShelf) *BookShelfIterator {
-	return &BookShelfIterator{
-		bookShelf: bookShelf,
-		index:     0,
-	}
-}
-
-func (b *BookShelfIterator) HasNext() bool {
-	return b.index < b.bookShelf.GetLength()
-}
-
-func (b *BookShelfIterator) Next() *Book {
-	book := b.bookShelf.GetBookAt(b.index)
-	b.index += 1
-	return book
 }
