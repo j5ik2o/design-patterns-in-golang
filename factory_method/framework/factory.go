@@ -5,13 +5,11 @@ type Factory struct {
 }
 
 func NewFactory(delegate FactoryDelegate) *Factory {
-	return &Factory{
-		delegate: delegate,
-	}
+	return &Factory{delegate}
 }
 
 func (f *Factory) Create(owner string) Product {
 	p := f.delegate.CreateProduct(owner)
-	f.delegate.RegisterProduct(p)
+	f.delegate = f.delegate.RegisterProduct(p)
 	return p
 }
