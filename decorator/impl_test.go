@@ -9,18 +9,10 @@ func TestDecorator(t *testing.T) {
 	b1.Show()
 	b2.Show()
 	b3.Show()
+
 	b4 := NewSideBorder(
 		NewFullBorder(
-			NewFullBorder(
-				NewSideBorder(
-					NewFullBorder(
-						NewStringDisplay("Hello, world."),
-					),
-					'*',
-				),
-			),
-		),
-		'/',
-	)
+			NewSideBorder(NewFullBorder(NewStringDisplay("Hello, world.")), '*')),
+		'/')
 	b4.Show()
 }
