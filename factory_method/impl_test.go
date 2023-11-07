@@ -1,9 +1,13 @@
 package factory_method
 
-import "testing"
+import (
+	"desgin-patterns-in-golang/factory_method/framework"
+	"desgin-patterns-in-golang/factory_method/idcard"
+	"testing"
+)
 
 func TestFactoryMethod(t *testing.T) {
-	factory := IdCardFactory{}
+	factory := framework.NewFactory(idcard.NewIDCardFactoryDelegate())
 	card1 := factory.Create("結城浩")
 	card2 := factory.Create("とむら")
 	card3 := factory.Create("佐藤花子")
