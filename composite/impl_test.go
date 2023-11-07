@@ -8,28 +8,28 @@ func TestComposite(t *testing.T) {
 	tmpDir := NewDirectory("tmp")
 	usrDir := NewDirectory("usr")
 
-	rootDir.Add(binDir)
-	rootDir.Add(tmpDir)
-	rootDir.Add(usrDir)
-
-	binDir.Add(NewFile("vi", 10000))
-	binDir.Add(NewFile("latex", 20000))
+	binDir = binDir.Add(NewFile("vi", 10000))
+	binDir = binDir.Add(NewFile("latex", 20000))
 
 	yuki := NewDirectory("yuki")
 	hanako := NewDirectory("hanako")
 	tomura := NewDirectory("tomura")
 
-	usrDir.Add(yuki)
-	usrDir.Add(hanako)
-	usrDir.Add(tomura)
+	yuki = yuki.Add(NewFile("diary.html", 100))
+	yuki = yuki.Add(NewFile("Composite.java", 200))
 
-	yuki.Add(NewFile("diary.html", 100))
-	yuki.Add(NewFile("Composite.java", 200))
+	hanako = hanako.Add(NewFile("memo.tex", 300))
 
-	hanako.Add(NewFile("memo.tex", 300))
+	tomura = tomura.Add(NewFile("game.doc", 400))
+	tomura = tomura.Add(NewFile("junk.mail", 500))
 
-	tomura.Add(NewFile("game.doc", 400))
-	tomura.Add(NewFile("junk.mail", 500))
+	usrDir = usrDir.Add(yuki)
+	usrDir = usrDir.Add(hanako)
+	usrDir = usrDir.Add(tomura)
 
-	rootDir.PrintLine()
+	rootDir = rootDir.Add(binDir)
+	rootDir = rootDir.Add(tmpDir)
+	rootDir = rootDir.Add(usrDir)
+
+	rootDir.PrintList()
 }
