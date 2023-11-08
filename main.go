@@ -1,11 +1,12 @@
 package main
 
 import (
+	"desgin-patterns-in-golang/template_method"
 	"desgin-patterns-in-golang/template_method_old"
 	"fmt"
 )
 
-func testDisplay(d template_method_old.Display) {
+func testDisplay(d template_method.Display) {
 	d.Display()
 }
 

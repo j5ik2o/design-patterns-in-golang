@@ -1,8 +1,11 @@
-package template_method_old
+package template_method_abstract
 
-import "testing"
+import (
+	"desgin-patterns-in-golang/template_method"
+	"testing"
+)
 
-func testDisplay(d Display) {
+func testDisplay(d template_method.Display) {
 	d.Display()
 }
 

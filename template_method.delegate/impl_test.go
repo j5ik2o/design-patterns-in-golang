@@ -1,4 +1,4 @@
-package template_method_new
+package template_method_delegate
 
 import "testing"
 
