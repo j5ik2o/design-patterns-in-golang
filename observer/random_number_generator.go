@@ -1,22 +1,6 @@
 package observer
 
-import (
-	"fmt"
-	"math/rand"
-	"time"
-)
-
-type NumberGenerator interface {
-	AddObserver(observer Observer)
-	DeleteObserver(observer Observer)
-	NotifyObservers()
-	GetNumber() uint
-	Execute()
-}
-
-type Observer interface {
-	Update(generator NumberGenerator)
-}
+import "math/rand"
 
 type RandomNumberGenerator struct {
 	observers []Observer
@@ -66,25 +50,4 @@ func (r *RandomNumberGenerator) Execute() {
 		r.number = uint(rand.Intn(50))
 		r.NotifyObservers()
 	}
-}
-
-type DigitObserver struct {
-}
-
-func (d DigitObserver) Update(generator NumberGenerator) {
-	fmt.Printf("DigitObserver:%d\n", generator.GetNumber())
-	time.Sleep(100 * time.Millisecond)
-}
-
-type GraphObserver struct {
-}
-
-func (g GraphObserver) Update(generator NumberGenerator) {
-	fmt.Print("GraphObserver:")
-	count := generator.GetNumber()
-	for i := uint(0); i < count; i++ {
-		fmt.Print("*")
-	}
-	fmt.Println("")
-	time.Sleep(100 * time.Millisecond)
 }
