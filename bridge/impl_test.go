@@ -12,5 +12,6 @@ func TestBridge(t *testing.T) {
 	d3.MultiDisplay(5)
 
 	d := NewRandomCountDisplay(NewStringDisplayDelegate("Hello, Random."))
+	d.CountDisplay.Display()
 	d.RandomDisplay(10)
 }
