@@ -5,24 +5,6 @@ import (
 	"github.com/samber/mo"
 )
 
-type Trouble struct {
-	number int
-}
-
-func NewTrouble(number int) *Trouble {
-	return &Trouble{
-		number: number,
-	}
-}
-
-func (t *Trouble) GetNumber() int {
-	return t.number
-}
-
-func (t *Trouble) String() string {
-	return fmt.Sprintf("[Trouble %d]", t.number)
-}
-
 type SupportBase interface {
 	Done(trouble *Trouble)
 	Fail(trouble *Trouble)
@@ -203,7 +185,7 @@ func (s *SpecialSupport) Support(trouble *Trouble) {
 func support(s Support, trouble *Trouble) {
 	if s.Resolve(trouble) {
 		s.Done(trouble)
-	} else if s.Next() != mo.None[Support]() {
+	} else if s.Next().IsPresent() {
 		s.Next().MustGet().Support(trouble)
 	} else {
 		s.Fail(trouble)

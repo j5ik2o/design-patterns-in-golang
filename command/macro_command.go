@@ -1,11 +1,5 @@
 package command
 
-import "fmt"
-
-type Command interface {
-	Execute()
-}
-
 // --- MacroCommand
 
 type MacroCommand struct {
@@ -38,20 +32,4 @@ func (mc *MacroCommand) Undo() *MacroCommand {
 
 func (mc *MacroCommand) Clear() *MacroCommand {
 	return NewMacroCommand()
-}
-
-// --- EchoCommand
-
-type EchoCommand struct {
-	msg string
-}
-
-func NewEchoCommand(msg string) *EchoCommand {
-	return &EchoCommand{
-		msg: msg,
-	}
-}
-
-func (mc *EchoCommand) Execute() {
-	fmt.Println(mc.msg)
 }
