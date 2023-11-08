@@ -16,11 +16,11 @@ func TestStrategy(t *testing.T) {
 		nextHand1 := player1.NextHand().MustGet()
 		nextHand2 := player2.NextHand().MustGet()
 		if nextHand1.IsStrongerThan(*nextHand2) {
-			fmt.Printf("Winner:%s\n", player1.ToString())
+			fmt.Printf("Winner:%s\n", player1.String())
 			player1.Win()
 			player2.Lose()
 		} else if nextHand1.IsStrongerThan(*nextHand1) {
-			fmt.Printf("Winner:%s\n", player2.ToString())
+			fmt.Printf("Winner:%s\n", player2.String())
 			player1.Lose()
 			player2.Win()
 		} else {
@@ -30,7 +30,7 @@ func TestStrategy(t *testing.T) {
 	}
 
 	fmt.Println("Total result:")
-	fmt.Println(player1.ToString())
-	fmt.Println(player2.ToString())
+	fmt.Println(player1.String())
+	fmt.Println(player2.String())
 
 }
