@@ -1,15 +1,8 @@
-package composite
+package delegate
 
 import "strings"
 
-type EntryDelegate interface {
-	GetFullName(self Entry) string
-}
-
-type EntryDelegateImpl struct {
-}
-
-func (e *EntryDelegateImpl) GetFullName(self Entry) string {
+func GetFullName(self Entry) string {
 	var fullname strings.Builder
 	entry := self
 	for entry != nil {

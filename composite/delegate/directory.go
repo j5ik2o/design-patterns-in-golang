@@ -1,4 +1,4 @@
-package composite
+package delegate
 
 import "fmt"
 
@@ -6,14 +6,12 @@ type Directory struct {
 	parent    Entry
 	name      string
 	directory []Entry
-	delegate  EntryDelegate
 }
 
 func NewDirectory(name string) *Directory {
 	return &Directory{
 		name:      name,
 		directory: []Entry{},
-		delegate:  &EntryDelegateImpl{},
 	}
 }
 
@@ -49,7 +47,7 @@ func (d *Directory) PrintList() {
 }
 
 func (d *Directory) GetFullName() string {
-	return d.delegate.GetFullName(d)
+	return GetFullName(d)
 }
 
 func (d *Directory) String() string {

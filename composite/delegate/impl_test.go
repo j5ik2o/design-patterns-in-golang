@@ -1,4 +1,4 @@
-package composite
+package delegate
 
 import "testing"
 

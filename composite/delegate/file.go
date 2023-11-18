@@ -1,19 +1,17 @@
-package composite
+package delegate
 
 import "fmt"
 
 type File struct {
-	parent   Entry
-	name     string
-	size     int
-	delegate EntryDelegate
+	parent Entry
+	name   string
+	size   int
 }
 
 func NewFile(name string, size int) *File {
 	return &File{
-		name:     name,
-		size:     size,
-		delegate: &EntryDelegateImpl{},
+		name: name,
+		size: size,
 	}
 }
 
@@ -42,7 +40,7 @@ func (f *File) PrintList() {
 }
 
 func (f *File) GetFullName() string {
-	return f.delegate.GetFullName(f)
+	return GetFullName(f)
 }
 
 func (f *File) String() string {
