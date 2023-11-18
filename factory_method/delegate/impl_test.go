@@ -1,8 +1,8 @@
-package factory_method
+package delegate
 
 import (
-	"desgin-patterns-in-golang/factory_method/framework"
-	"desgin-patterns-in-golang/factory_method/idcard"
+	"desgin-patterns-in-golang/factory_method/delegate/framework"
+	"desgin-patterns-in-golang/factory_method/delegate/idcard"
 	"testing"
 )
 

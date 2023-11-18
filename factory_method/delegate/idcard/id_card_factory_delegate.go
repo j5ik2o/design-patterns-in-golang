@@ -1,7 +1,7 @@
 package idcard
 
 import (
-	"desgin-patterns-in-golang/factory_method/framework"
+	framework2 "desgin-patterns-in-golang/factory_method/delegate/framework"
 	"fmt"
 )
 
@@ -12,11 +12,11 @@ func NewIDCardFactoryDelegate() *IDCardFactoryDelegate {
 	return &IDCardFactoryDelegate{}
 }
 
-func (d *IDCardFactoryDelegate) CreateProduct(owner string) framework.Product {
+func (d *IDCardFactoryDelegate) CreateProduct(owner string) framework2.Product {
 	return NewIDCard(owner)
 }
 
-func (d *IDCardFactoryDelegate) RegisterProduct(product framework.Product) framework.FactoryDelegate {
+func (d *IDCardFactoryDelegate) RegisterProduct(product framework2.Product) framework2.FactoryDelegate {
 	fmt.Println(product.ToString() + "を登録します。")
 	return d
 }

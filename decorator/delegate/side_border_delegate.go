@@ -1,4 +1,4 @@
-package decorator
+package delegate
 
 type SideBorderDelegate struct {
 	display *Display
