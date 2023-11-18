@@ -1,4 +1,4 @@
-package template_method_abstract
+package template_method_embbed
 
 import "fmt"
 
