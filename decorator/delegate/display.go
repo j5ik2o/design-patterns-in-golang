@@ -6,10 +6,6 @@ type Display struct {
 	delegate DisplayDelegate
 }
 
-func NewDisplay(delegate DisplayDelegate) *Display {
-	return &Display{delegate}
-}
-
 func NewStringDisplay(str string) *Display {
 	return &Display{NewStringDisplayDelegate(str)}
 }

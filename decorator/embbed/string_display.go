@@ -5,6 +5,14 @@ type StringDisplay struct {
 	str string
 }
 
+func NewStringDisplay(str string) *StringDisplay {
+	self := &StringDisplay{
+		str: str,
+	}
+	self.Display = NewDisplay(self.GetColumns, self.GetRows, self.GetRowText)
+	return self
+}
+
 func (d *StringDisplay) GetColumns() int {
 	return len(d.str)
 }
@@ -18,12 +26,4 @@ func (d *StringDisplay) GetRowText(row int) string {
 		return ""
 	}
 	return d.str
-}
-
-func NewStringDisplay(str string) *StringDisplay {
-	self := &StringDisplay{
-		str: str,
-	}
-	self.Display = NewDisplay(self.GetColumns, self.GetRows, self.GetRowText)
-	return self
 }

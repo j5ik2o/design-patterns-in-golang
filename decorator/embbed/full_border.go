@@ -6,6 +6,12 @@ type FullBorder struct {
 	*Border
 }
 
+func NewFullBorder(display *Display) *FullBorder {
+	self := &FullBorder{}
+	self.Border = NewBorder(NewDisplay(self.GetColumns, self.GetRows, self.GetRowText), display)
+	return self
+}
+
 func (b *FullBorder) GetColumns() int {
 	return 1 + b.display.GetColumns() + 1
 }
@@ -31,10 +37,4 @@ func (b *FullBorder) makeLine(ch byte, count int) string {
 		sb.WriteByte(ch)
 	}
 	return sb.String()
-}
-
-func NewFullBorder(display *Display) *FullBorder {
-	self := &FullBorder{}
-	self.Border = NewBorder(NewDisplay(self.GetColumns, self.GetRows, self.GetRowText), display)
-	return self
 }
