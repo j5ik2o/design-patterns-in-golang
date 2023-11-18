@@ -1,4 +1,4 @@
-package template_method_delegate
+package delegate
 
 type Printer interface {
 	open()

@@ -1,4 +1,4 @@
-package template_method_embbed
+package embbed
 
 type AbstractDisplay struct {
 	printer Printer

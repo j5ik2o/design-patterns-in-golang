@@ -1,27 +1,32 @@
-package template_method_embbed
+package delegate
 
 import "fmt"
 
 type CharDisplay struct {
-	*AbstractDisplay
-	ch rune
+	template *Template
+	ch       rune
 }
 
 func NewCharDisplay(c rune) *CharDisplay {
 	cd := &CharDisplay{
-		AbstractDisplay: &AbstractDisplay{},
-		ch:              c,
+		ch: c,
 	}
-	cd.printer = cd
+	cd.template = NewTemplate(cd)
 	return cd
+}
+
+func (c *CharDisplay) Display() {
+	c.template.display()
 }
 
 func (c *CharDisplay) open() {
 	fmt.Print("<<")
 }
+
 func (c *CharDisplay) print() {
 	fmt.Print(string(c.ch))
 }
+
 func (c *CharDisplay) close() {
 	fmt.Println(">>")
 }

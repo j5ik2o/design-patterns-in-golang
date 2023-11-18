@@ -1,4 +1,4 @@
-package template_method_embbed
+package embbed
 
 import (
 	"desgin-patterns-in-golang/template_method"
