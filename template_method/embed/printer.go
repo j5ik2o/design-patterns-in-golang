@@ -1,4 +1,4 @@
-package embbed
+package embed
 
 type Printer interface {
 	open()

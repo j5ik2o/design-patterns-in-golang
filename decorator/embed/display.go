@@ -1,4 +1,4 @@
-package embbed
+package embed
 
 type GetColumnsF func() int
 type GetRowsF func() int
