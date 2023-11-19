@@ -1,0 +1,40 @@
+================================================
+  NLOC    CCN   token  PARAM  length  location  
+------------------------------------------------
+      23      1    197      1      31 TestComposite@5-35@./impl_test.go
+       6      1     26      2       6 NewFile@11-16@./file.go
+       3      1     18      1       3 SetParent@18-20@./file.go
+       3      1     16      0       3 GetParent@22-24@./file.go
+       3      1     16      0       3 GetName@26-28@./file.go
+       3      1     16      0       3 GetSize@30-32@./file.go
+       3      1     27      1       3 PrintListWithPrefix@34-36@./file.go
+       3      1     17      0       3 PrintList@38-40@./file.go
+       3      1     17      0       3 GetFullName@42-44@./file.go
+       3      1     27      0       3 String@46-48@./file.go
+      15      3    116      1      15 GetFullName@5-19@./entry_delegate.go
+       6      1     27      1       6 NewDirectory@11-16@./directory.go
+       3      1     18      1       3 SetParent@18-20@./directory.go
+       3      1     16      0       3 GetParent@22-24@./directory.go
+       3      1     16      0       3 GetName@26-28@./directory.go
+       7      2     35      0       7 GetSize@30-36@./directory.go
+       6      2     50      1       6 PrintListWithPrefix@38-43@./directory.go
+       3      1     17      0       3 PrintList@45-47@./directory.go
+       3      1     17      0       3 GetFullName@49-51@./directory.go
+       3      1     31      0       3 String@53-55@./directory.go
+      10      1     72      1      10 Add@57-66@./directory.go
+5 file analyzed.
+==============================================================
+NLOC    Avg.NLOC  AvgCCN  Avg.token  function_cnt    file
+--------------------------------------------------------------
+     25      23.0     1.0      197.0         1     ./impl_test.go
+     12       0.0     0.0        0.0         0     ./entry.go
+     37       3.3     1.0       20.0         9     ./file.go
+     17      15.0     3.0      116.0         1     ./entry_delegate.go
+     54       4.7     1.2       29.9        10     ./directory.go
+
+===============================================================================================================
+No thresholds exceeded (cyclomatic_complexity > 15 or length > 1000 or nloc > 1000000 or parameter_count > 100)
+==========================================================================================
+Total nloc   Avg.NLOC  AvgCCN  Avg.token   Fun Cnt  Warning cnt   Fun Rt   nloc Rt
+------------------------------------------------------------------------------------------
+       145       5.5     1.2       37.7       21            0      0.00    0.00
