@@ -1,10 +1,12 @@
 package bridge
 
+import "desgin-patterns-in-golang/bridge/delegates"
+
 type DisplayDefault struct {
-	underlying DisplayDelegate
+	underlying delegates.DisplayDelegate
 }
 
-func NewDisplayDefault(underlying DisplayDelegate) *DisplayDefault {
+func NewDisplayDefault(underlying delegates.DisplayDelegate) *DisplayDefault {
 	return &DisplayDefault{underlying}
 }
 

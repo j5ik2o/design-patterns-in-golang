@@ -1,6 +1,7 @@
-package bridge
+package displays
 
 import (
+	"desgin-patterns-in-golang/bridge/delegates"
 	"math/rand"
 )
 
@@ -8,7 +9,7 @@ type RandomCountDisplay struct {
 	*CountDisplay
 }
 
-func NewRandomCountDisplay(underlying DisplayDelegate) *RandomCountDisplay {
+func NewRandomCountDisplay(underlying delegates.DisplayDelegate) *RandomCountDisplay {
 	return &RandomCountDisplay{NewCountDisplay(underlying)}
 }
 

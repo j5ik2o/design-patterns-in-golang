@@ -1,4 +1,4 @@
-package bridge
+package displays
 
 type Display interface {
 	Open()

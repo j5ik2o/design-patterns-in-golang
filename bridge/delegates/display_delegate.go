@@ -1,4 +1,4 @@
-package bridge
+package delegates
 
 type DisplayDelegate interface {
 	RawOpen()
