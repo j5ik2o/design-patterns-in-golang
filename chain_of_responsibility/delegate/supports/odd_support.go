@@ -1,23 +1,24 @@
-package delegate
+package supports
 
 import (
 	"desgin-patterns-in-golang/chain_of_responsibility"
+	delegate2 "desgin-patterns-in-golang/chain_of_responsibility/delegate"
 	"fmt"
 )
 
 type OddSupport struct {
 	name     string
-	delegate *SupportDelegate
+	delegate *delegate2.SupportDelegate
 }
 
-func NewOddSupport(name string, next Support) *OddSupport {
-	var nextDelegate *SupportDelegate = nil
+func NewOddSupport(name string, next delegate2.Support) *OddSupport {
+	var nextDelegate *delegate2.SupportDelegate = nil
 	if next != nil {
 		nextDelegate = next.GetDelegate()
 	}
 	return &OddSupport{
 		name,
-		NewSupportDelegate(name, oddResolver, nextDelegate),
+		delegate2.NewSupportDelegate(name, oddResolver, nextDelegate),
 	}
 }
 
@@ -32,7 +33,7 @@ func (o *OddSupport) Support(trouble *chain_of_responsibility.Trouble) {
 	o.delegate.Support(trouble)
 }
 
-func (o *OddSupport) GetDelegate() *SupportDelegate {
+func (o *OddSupport) GetDelegate() *delegate2.SupportDelegate {
 	return o.delegate
 }
 

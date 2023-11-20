@@ -1,18 +1,19 @@
-package delegate
+package supports
 
 import (
 	"desgin-patterns-in-golang/chain_of_responsibility"
+	delegate2 "desgin-patterns-in-golang/chain_of_responsibility/delegate"
 	"fmt"
 )
 
 type SpecialSupport struct {
 	name     string
 	number   int
-	delegate *SupportDelegate
+	delegate *delegate2.SupportDelegate
 }
 
-func NewSpecialSupport(name string, number int, next Support) *SpecialSupport {
-	var nextDelegate *SupportDelegate = nil
+func NewSpecialSupport(name string, number int, next delegate2.Support) *SpecialSupport {
+	var nextDelegate *delegate2.SupportDelegate = nil
 	if next != nil {
 		nextDelegate = next.GetDelegate()
 	}
@@ -20,7 +21,7 @@ func NewSpecialSupport(name string, number int, next Support) *SpecialSupport {
 		name:   name,
 		number: number,
 	}
-	self.delegate = NewSupportDelegate(name, self.specialResolver, nextDelegate)
+	self.delegate = delegate2.NewSupportDelegate(name, self.specialResolver, nextDelegate)
 	return self
 }
 
@@ -35,7 +36,7 @@ func (s *SpecialSupport) Support(trouble *chain_of_responsibility.Trouble) {
 	s.delegate.Support(trouble)
 }
 
-func (s *SpecialSupport) GetDelegate() *SupportDelegate {
+func (s *SpecialSupport) GetDelegate() *delegate2.SupportDelegate {
 	return s.delegate
 }
 
