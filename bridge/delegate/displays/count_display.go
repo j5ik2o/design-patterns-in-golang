@@ -1,16 +1,15 @@
 package displays
 
 import (
-	"desgin-patterns-in-golang/bridge"
-	"desgin-patterns-in-golang/bridge/delegates"
+	"desgin-patterns-in-golang/bridge/delegate/delegates"
 )
 
 type CountDisplay struct {
-	underlying *bridge.DisplayDefault
+	underlying *Display
 }
 
 func NewCountDisplay(underlying delegates.DisplayDelegate) *CountDisplay {
-	return &CountDisplay{bridge.NewDisplayDefault(underlying)}
+	return &CountDisplay{NewDisplay(underlying)}
 }
 
 func (c *CountDisplay) MultiDisplay(times int) {
