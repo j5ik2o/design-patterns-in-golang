@@ -20,7 +20,7 @@ func NewBigString(string string) *BigString {
 func (bs *BigString) ToString() string {
 	var result string
 	for i := 0; i < len(bs.bigChars); i++ {
-		result += bs.bigChars[i].ToString()
+		result += bs.bigChars[i].String()
 	}
 	return result
 }

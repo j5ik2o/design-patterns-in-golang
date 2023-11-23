@@ -11,7 +11,7 @@ type BigChar struct {
 	fontData string
 }
 
-func (bc *BigChar) ToString() string {
+func (bc *BigChar) String() string {
 	return bc.fontData
 }
 
