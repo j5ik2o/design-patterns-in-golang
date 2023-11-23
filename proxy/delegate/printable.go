@@ -1,4 +1,4 @@
-package _delegate
+package delegate
 
 type Printable interface {
 	SetPrinterName(name string)

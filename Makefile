@@ -1,44 +1,55 @@
-.PHONY: setup
-setup: ## Install all the build and lint dependencies
-	go install honnef.co/go/tools/cmd/staticcheck@latest
-	go get -u golang.org/x/tools/cmd/cover
-	@$(MAKE) dep
+# Go parameters
+GOCMD=go
+GOTEST=$(GOCMD) test
+GOGET=$(GOCMD) get
+GOMOD=$(GOCMD) mod
 
-.PHONY: dep
-dep:
-	go mod tidy
+.PHONY: install-tools
+install-tools:
+	@which staticcheck > /dev/null || go install honnef.co/go/tools/cmd/staticcheck@latest
+	@which goimports > /dev/null || go install golang.org/x/tools/cmd/goimports@latest
+
+.PHONY: all
+all: test
 
 .PHONY: test
-test: ## Run all the tests
-	echo 'mode: atomic' > coverage.txt && go test -covermode=atomic -coverprofile=coverage.txt -v -race -timeout=30s ./...
-
-.PHONY: cover
-cover: test ## Run all the tests and opens the coverage report
-	go tool cover -html=coverage.txt
-
-.PHONY: fmt
-fmt: ## Run goimports on all go files
-	find . -name '*.go' -not -wholename './vendor/*' | while read -r file; do goimports -w "$$file"; done
-
-.PHONY: lint
-lint: ## Run all the linters
-	go vet ./...
-	staticcheck ./...
-
-.PHONY: ci
-ci: lint test ## Run all the tests and code checks
-
-.PHONY: build
-build: ## Build a version
-	go build -v ./...
+test:
+	$(GOTEST) -v ./...
 
 .PHONY: clean
-clean: ## Remove temporary files
-	go clean
+clean:
+	$(GOMOD) tidy
+	rm -rf ./testdata
 
-# Absolutely awesome: http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
-.PHONY: help
-help:
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+.PHONY: deps
+deps:
+	$(GOGET) -u
 
-.DEFAULT_GOAL := build
+.PHONY: lint
+lint:
+	staticcheck ./...
+
+.PHONY: vet
+vet:
+	$(GOCMD) vet ./...
+
+.PHONY: fmt
+fmt:
+	gofmt -s -w .
+
+.PHONY: tidy
+tidy:
+	$(GOMOD) tidy
+
+# Run all code checks
+.PHONY: check
+check: lint vet fmt test
+
+# Download all dependencies
+prepare:
+	$(GOMOD) download
+
+# Update all dependencies
+update:
+	$(GOMOD) tidy
+	$(GOMOD) download

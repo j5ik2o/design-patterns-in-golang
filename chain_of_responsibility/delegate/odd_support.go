@@ -22,10 +22,7 @@ func NewOddSupport(name string, next Support) *OddSupport {
 }
 
 func oddResolver(t *chain_of_responsibility.Trouble) bool {
-	if t.GetNumber()%2 == 1 {
-		return true
-	}
-	return false
+	return t.GetNumber()%2 == 1
 }
 
 func (o *OddSupport) Support(trouble *chain_of_responsibility.Trouble) {

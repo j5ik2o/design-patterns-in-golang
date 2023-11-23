@@ -1,4 +1,4 @@
-package _delegate
+package delegate
 
 import (
 	"fmt"

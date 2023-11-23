@@ -25,10 +25,7 @@ func NewLimitSupport(name string, limit int, next Support) *LimitSupport {
 }
 
 func (l *LimitSupport) limitResolver(t *chain_of_responsibility.Trouble) bool {
-	if t.GetNumber() < l.limit {
-		return true
-	}
-	return false
+	return t.GetNumber() < l.limit
 }
 
 func (l *LimitSupport) Support(trouble *chain_of_responsibility.Trouble) {

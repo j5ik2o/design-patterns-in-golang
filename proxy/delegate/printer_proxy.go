@@ -1,4 +1,4 @@
-package _delegate
+package delegate
 
 type PrinterProxy struct {
 	name       string

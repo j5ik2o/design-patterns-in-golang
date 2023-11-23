@@ -25,10 +25,7 @@ func NewSpecialSupport(name string, number int, next Support) *SpecialSupport {
 }
 
 func (s *SpecialSupport) specialResolver(trouble *chain_of_responsibility.Trouble) bool {
-	if trouble.GetNumber() == s.number {
-		return true
-	}
-	return false
+	return trouble.GetNumber() == s.number
 }
 
 func (s *SpecialSupport) Support(trouble *chain_of_responsibility.Trouble) {
